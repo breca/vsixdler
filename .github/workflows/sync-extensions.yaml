@@ -45,6 +45,10 @@ jobs:
           fi
           ./vsixdler download $flags
 
+      - name: Bundle archive
+        if: inputs.dry_run != 'true'
+        run: tar -czf extensions.tar.gz -C vsix .
+
       - name: Create release
         if: inputs.dry_run != 'true'
         env:
@@ -53,4 +57,4 @@ jobs:
           gh release create "${{ steps.tag.outputs.tag }}" \
             --title "Extensions sync ${{ steps.tag.outputs.tag }}" \
             --notes "Automated extension sync from branch \`${GITHUB_REF_NAME}\`." \
-            ./vsix/*.vsix
+            extensions.tar.gz
