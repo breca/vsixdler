@@ -1,0 +1,41 @@
+name: Cleanup Old Releases
+
+on:
+  schedule:
+    - cron: "0 5 * * 0" # Sundays 05:00 UTC (1h after sync)
+  workflow_dispatch:
+    inputs:
+      keep:
+        description: "Number of releases to keep per branch"
+        type: number
+        default: 4
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      KEEP: ${{ inputs.keep || 4 }}
+    steps:
+      - name: Delete old releases
+        run: |
+          echo "Keeping latest $KEEP release(s) per branch"
+
+          # Group releases by branch prefix
+          gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName,createdAt \
+            --jq '.[] | .tagName' | while read -r tag; do
+            branch="${tag%/sync-*}"
+            echo "${branch} ${tag}"
+          done | sort | awk '{print $1, $2}' | {
+            declare -A count
+            while read -r branch tag; do
+              count[$branch]=$(( ${count[$branch]:-0} + 1 ))
+              if [ "${count[$branch]}" -gt "$KEEP" ]; then
+                echo "Deleting release $tag"
+                gh release delete "$tag" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag
+              fi
+            done
+          }
