@@ -1,5 +1,27 @@
 extensions:
+  # Python
   - id: "ms-python.python"
+
+  # Go
   - id: "golang.go"
-  - id: "ms-vscode.cpptools"
-    platforms: [linux-x64, darwin-arm64]
+
+  # Ruby
+  - id: "Shopify.ruby-lsp"
+
+  # Puppet
+  - id: "puppet.puppet-vscode"
+
+  # OpenTofu / Terraform
+  - id: "opentofu.vscode-opentofu"
+
+  # Docker / Podman
+  - id: "ms-azuretools.vscode-docker"
+
+  # GitLab
+  - id: "GitLab.gitlab-workflow"
+
+  # YAML
+  - id: "redhat.vscode-yaml"
+
+  # ShellCheck
+  - id: "timonwong.shellcheck"
