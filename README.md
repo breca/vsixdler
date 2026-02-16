@@ -2,7 +2,7 @@
 
 Download VS Code extensions from the marketplace and bundle them into a single release archive. Useful for offline installation, archival, and distribution.
 
-**TL;DR:** Fork this repo, create a branch, edit `extensions.yaml` with the extensions you want, and push. A weekly GitHub Actions workflow will automatically download your extensions and publish them as release assets. You can also trigger it manually from the Actions tab.
+**TL;DR:** Fork this repo, create a branch, edit `extensions.yaml` with the extensions you want, and push. Every push that changes `extensions.yaml` automatically downloads your extensions and publishes them as a GitHub release. A weekly sync also runs on Sundays, or you can trigger it manually from the Actions tab.
 
 ## Setup
 
