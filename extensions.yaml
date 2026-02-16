@@ -1,0 +1,5 @@
+extensions:
+  - id: "ms-python.python"
+  - id: "golang.go"
+  - id: "ms-vscode.cpptools"
+    platforms: [linux-x64, darwin-arm64]
