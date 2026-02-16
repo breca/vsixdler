@@ -1,6 +1,8 @@
 name: Sync Extensions
 
 on:
+  push:
+    paths: [extensions.yaml]
   schedule:
     - cron: "0 4 * * 0" # Sundays 04:00 UTC
   workflow_dispatch:
